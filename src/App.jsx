@@ -10,8 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/update" element={<UpdateForm />} />
-        <Route path="/login/:name/:bookName/:Name" element={<Login />} />
-        <Route path="/:name/:bookName/:Name" element={<AudioPlayer />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/artofconversation" element={<AudioPlayer />} />
       </Routes>
     </Router>
   );

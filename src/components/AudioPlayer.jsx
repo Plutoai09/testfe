@@ -1,132 +1,17 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import "./ui/ripple.css";
-// import { useParams } from "react-router-dom";
-// import {
-//   Rewind,
-//   FastForward,
-//   Play,
-//   Pause,
-//   MessageCircle,
-//   X,
-//   Loader,
-// } from "lucide-react";
 
-// const AudioPlayer = () => {
-//   const { name, bookName, Name } = useParams();
-//   const boooknaame = bookName.replace(/([A-Z])/g, " $1").trim();
-//   const [isProcessing, setIsProcessing] = useState(false);
-//   const [audioSrc, setAudioSrc] = useState("");
-//   const [imageSrc, setImageSrc] = useState("");
-//   const [authorImageSrc, setAuthorImageSrc] = useState("");
-//   const [authorName, setAuthorName] = useState("");
-//   const [persona, setPersona] = useState("");
-//   const [error, setError] = useState("");
-//   const [isPlaying, setIsPlaying] = useState(false);
-//   const [audioElement, setAudioElement] = useState(null);
-//   const [question, setQuestion] = useState("");
-//   const [answer, setAnswer] = useState("");
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [answerAudioSrc, setAnswerAudioSrc] = useState("");
-//   const [isAnswerPlaying, setIsAnswerPlaying] = useState(false);
-//   const answerAudioRef = useRef(null);
-//   const afterAnswerAudioRef = useRef(null);
-//   const [currentTime, setCurrentTime] = useState(0);
-//   const [duration, setDuration] = useState(0);
-//   const [lastPlayedTime, setLastPlayedTime] = useState(0);
-//   const [chapters, setChapters] = useState([]);
-//   const [currentChapter, setCurrentChapter] = useState(0);
-
-//   const getFullAudioUrl = (path) => {
-//     const baseUrl = "https://contractus.co.in";
-//     return `${baseUrl}${path}`;
-//   };
-
-//   useEffect(() => {
-//     const fetchAudiobook = async () => {
-//       try {
-//         const response = await fetch("https://contractus.co.in/api/audiobook", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({ name, bookName }),
-//         });
-
-//         if (!response.ok) {
-//           throw new Error("Failed to fetch audiobook");
-//         }
-
-//         const data = await response.json();
-//         console.log(data);
-//         if (data.chapters && data.chapters.length > 0) {
-//           setAudioSrc(data.chapters[0].url);
-//         } else {
-//           throw new Error("No chapters found in the response");
-//         }
-
-//         setImageSrc(data.imageSrc);
-//         setAuthorImageSrc(data.authorImageSrc);
-//         setAuthorName(data.authorName);
-//         setPersona(data.persona);
-//         setChapters(data.chapters);
-//         setError("");
-//       } catch (error) {
-//         console.error("Error fetching audiobook:", error);
-//         setError("Failed to load audiobook. Please try again.");
-//       }
-//     };
-//     fetchAudiobook();
-//   }, [name, bookName]);
-
-//   useEffect(() => {
-//     if (audioSrc) {
-//       const audio = new Audio(audioSrc);
-//       audio.onerror = (e) => {
-//         console.error("Initial audio error:", e);
-//         setError(`Failed to load initial audio. Error: ${e.type}`);
-//       };
-//       audio.onloadedmetadata = () => {
-//         setDuration(audio.duration);
-//       };
-//       audio.ontimeupdate = () => {
-//         setCurrentTime(audio.currentTime);
-//       };
-//       setAudioElement(audio);
-//       return () => {
-//         audio.pause();
-//         audio.src = "";
-//       };
-//     }
-//   }, [audioSrc]);
-
-//   useEffect(() => {
-//     if (audioElement) {
-//       const handleEnded = () => {
-//         if (currentChapter < chapters.length - 1) {
-//           playChapter(currentChapter + 1);
-//         } else {
-//           setIsPlaying(false);
-//         }
-//       };
-
-//       audioElement.addEventListener("ended", handleEnded);
-
-//       return () => {
-//         audioElement.removeEventListener("ended", handleEnded);
-//       };
-//     }
-//   }, [audioElement, currentChapter, chapters]);
 import React, { useState, useEffect, useRef } from "react";
 import "./ui/ripple.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Rewind,
   FastForward,
   Play,
   Pause,
   MessageCircle,
+  Phone,
   X,
   Loader,
+  Key
 } from "lucide-react";
 
 const LoadingSkeleton = () => {
@@ -188,9 +73,11 @@ const LoadingSkeleton = () => {
 };
 
 const AudioPlayer = () => {
-  const { name, bookName, Name } = useParams();
-  const boooknaame = bookName.replace(/([A-Z])/g, " $1").trim();
-
+  const navigate = useNavigate();
+  const boooknaame = "ArtOfConversation"
+  const name = "user"
+  const bookName = "ArtOfConversation"
+  const Name = "ArtOfConversation"
   // Group all useState declarations together
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -220,6 +107,17 @@ const AudioPlayer = () => {
     const baseUrl = "https://contractus.co.in";
     return `${baseUrl}${path}`;
   };
+
+
+  useEffect(() => {
+    const authCode = localStorage.getItem('authCode');
+    
+    if (authCode !== 'pluto_success') {
+      navigate('/login');
+    }
+  }, []);
+
+
 
   useEffect(() => {
     const fetchAudiobook = async () => {
@@ -467,7 +365,7 @@ const AudioPlayer = () => {
       let route;
       if (bookName == "YoutubeGrowth") route = "askquestion";
       else route = "askquestion1";
-      const response = await fetch(`https://contractus.co.in/${route}`, {
+      const response = await fetch(`"https://contractus.co.in/${route}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -573,12 +471,13 @@ const AudioPlayer = () => {
           <div className={`relative -mt-10 px-6 ${!isModalOpen ? "z-10" : ""}`}>
             <div className="bg-white rounded-[20px] p-4 shadow-lg">
               <h2 className="text-lg sm:text-xl font-bold text-center text-gray-800 mb-1">
-                {boooknaame}
+                Art of Conversation
               </h2>
-              <p className="text-sm sm:text-base text-center text-gray-600">
-                {authorName || name}
-              </p>
-              <div className="flex justify-center">
+              <p className="text-sm sm:text-base text-center text-gray-600" style={{ marginBottom: "9px" }}>
+  Interactive Audiobook
+</p>
+              <p></p>
+              {/* <div className="flex justify-center">
                 <button
                   onClick={() =>
                     (window.location.href = "https://getpluto.in/upgrade")
@@ -588,7 +487,18 @@ const AudioPlayer = () => {
                 >
                   Upgrade
                 </button>
-              </div>
+              </div> */}
+
+<div className="flex justify-center mb-3">
+              <button
+     onClick={() =>
+      (window.location.href = "https://www.delphi.ai/pluto/call")
+    }
+                className="bg-[#0e2a57] text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 transition-colors"              >
+                <Phone size={18} />
+                <span className="text-sm">Talk & Learn</span>
+              </button>
+            </div>
             </div>
           </div>
 
@@ -605,7 +515,7 @@ const AudioPlayer = () => {
                 >
                   <div className="px-2">
                     <p className="text-xs text-gray-400 mb-0.5">
-                      Chapter {index + 1}
+                      Chapter {index}
                     </p>
                     <p
                       className={`text-sm text-gray-900 ${
@@ -622,22 +532,24 @@ const AudioPlayer = () => {
 
           {/* Controls Section */}
           <div className="bg-gray-100 shadow-lg rounded-t-[30px] p-4">
-            <div className="flex justify-center mb-3">
+
+
+
+
+          <div className="flex justify-center mb-3">
               <button
-                onClick={() => {
-                  setIsModalOpen(true);
-                  if (audioElement && isPlaying) {
-                    audioElement.pause();
-                    setIsPlaying(false);
-                    setLastPlayedTime(audioElement.currentTime);
-                  }
-                }}
-                className="bg-black text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-blue-600 transition-colors"
-              >
-                <MessageCircle size={18} />
-                <span className="text-sm">Ask Question</span>
+     onClick={() =>
+      (window.location.href = "https://getpluto.in/upgrade")
+    }
+                className="bg-white text-black px-4 py-2 rounded-full flex items-center space-x-2 border border-blue-300 shadow-md hover:bg-gray-300 transition-colors"
+>
+                <Key size={18} />
+                <span className="text-sm">Upgrade</span>
               </button>
             </div>
+
+
+
 
             <div className="flex justify-between items-center mb-3">
               <button className="text-gray-400 hover:text-gray-600">
