@@ -546,29 +546,29 @@ const AudioPlayer = () => {
   </span>
 </div>
 
-  <div className="flex justify-center items-center mb-3 mt-8 gap-20">
-    <div className="flex flex-col items-center">
-      <button
-        onClick={togglePlayPause}
-        className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black-500 shadow-md hover:shadow-lg transition-shadow mb-3 border border-gray-200"
-      >
-        {isPlaying ? <Pause size={15} fill ="black"/> : <Play size={15} fill ="black"/>}
-      </button>
-      <span className="text-[10px] text-gray-500">Play</span>
-    </div>
-
-    <div className="flex flex-col items-center">
-      <button
-        onClick={() =>
-          (window.location.href = "https://www.delphi.ai/pluto/call")
-        }
-        className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black-500 shadow-md hover:shadow-lg transition-shadow mb-3 border border-gray-200"
-      >
-        <Phone size={15} fill ="black"/>
-      </button>
-      <span className="text-[10px] text-gray-500">Talk & Learn</span>
-    </div>
+<div className="flex justify-center items-center mb-3 mt-8 gap-20">
+  <div className="flex flex-col items-center">
+    <button
+      onClick={togglePlayPause}
+      className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black-500 shadow-md hover:shadow-lg transition-shadow mb-3 border-2 border-gray-300"
+    >
+      {isPlaying ? <Pause size={18} fill ="black"/> : <Play size={18} fill ="black"/>}
+    </button>
+    <span className="text-[11px] text-gray-500">Play</span>
   </div>
+
+  <div className="flex flex-col items-center">
+    <button
+      onClick={() =>
+        (window.location.href = "https://www.delphi.ai/pluto/call")
+      }
+      className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black-500 shadow-md hover:shadow-lg transition-shadow mb-3 border-2 border-gray-300"
+    >
+      <Phone size={18} fill ="black"/>
+    </button>
+    <span className="text-[11px] text-gray-500">Talk & Learn</span>
+  </div>
+</div>
 </div>
 
 
