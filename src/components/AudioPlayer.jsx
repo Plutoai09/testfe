@@ -460,7 +460,7 @@ const AudioPlayer = () => {
           </div>
 
           {/* Book Image Section - Adjusted height */}
-          <div className="relative w-full pt-[27vh] ">
+          <div className="relative w-full pt-[30vh] ">
             <div className="absolute inset-0">
               <div
                 className={`absolute inset-0 w-full h-full transition-all duration-300 ${
