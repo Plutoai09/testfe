@@ -109,6 +109,19 @@ const AudioPlayer = () => {
   };
 
 
+  const handlePreviousChaptermain = () => {
+    if (currentChapter > 0) {
+      playChapter(currentChapter - 1);
+    }
+  };
+
+  const handleNextChaptermain = () => {
+    if (currentChapter < chapters.length - 1) {
+      playChapter(currentChapter + 1);
+    }
+  };
+
+
   useEffect(() => {
     const authCode = localStorage.getItem('authCode');
     
@@ -313,6 +326,9 @@ const AudioPlayer = () => {
     }
   };
 
+
+  
+
   const playChapter = (index) => {
     if (audioElement) {
       audioElement.pause();
@@ -415,8 +431,9 @@ const AudioPlayer = () => {
               !isModalOpen ? "z-10" : ""
             }`}
           >
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24">
-              <div className="w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20">
+
+              <div className="w-full h-full rounded-full overflow-hidden border-2 border-white shadow-lg">
                 <img
                   src={authorImageSrc || "/api/placeholder/96/96"}
                   alt="Author"
@@ -443,7 +460,7 @@ const AudioPlayer = () => {
           </div>
 
           {/* Book Image Section - Adjusted height */}
-          <div className="relative w-full pt-[50%] ">
+          <div className="relative w-full pt-[27vh] ">
             <div className="absolute inset-0">
               <div
                 className={`absolute inset-0 w-full h-full transition-all duration-300 ${
@@ -468,7 +485,7 @@ const AudioPlayer = () => {
           </div>
 
           {/* Book Info Card - Overlapping the image */}
-          <div className={`relative -mt-10 px-6 ${!isModalOpen ? "z-10" : ""}`}>
+          {/* <div className={`relative -mt-10 px-6 ${!isModalOpen ? "z-10" : ""}`}>
             <div className="bg-white rounded-[20px] p-4 shadow-lg">
               <h2 className="text-lg sm:text-xl font-bold text-center text-gray-800 mb-1">
                 Art of Conversation
@@ -476,18 +493,7 @@ const AudioPlayer = () => {
               <p className="text-sm sm:text-base text-center text-gray-600" style={{ marginBottom: "9px" }}>
   Interactive Audiobook
 </p>
-              <p></p>
-              {/* <div className="flex justify-center">
-                <button
-                  onClick={() =>
-                    (window.location.href = "https://getpluto.in/upgrade")
-                  }
-                  className="mt-2 px-3 py-1 text-white text-sm font-semibold rounded-full"
-                  style={{ backgroundColor: "#4b1d63" }}
-                >
-                  Upgrade
-                </button>
-              </div> */}
+
 
 <div className="flex justify-center mb-3">
               <button
@@ -502,134 +508,118 @@ const AudioPlayer = () => {
             </div>
           </div>
 
-          {/* Chapters List - Adjusted height */}
-          <div className="flex-1 min-h-0 px-6 mt-4 mb-4 overflow-hidden">
-            <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
-              {chapters.map((chapter, index) => (
-                <div
-                  key={index}
-                  onClick={() => playChapter(index)}
-                  className={`py-2 sm:py-2.5 border-b border-gray-200 first:border-t ${
-                    currentChapter === index ? "bg-gray-50" : ""
-                  } cursor-pointer transition-colors`}
-                >
-                  <div className="px-2">
-                    <p className="text-xs text-gray-400 mb-0.5">
-                      Chapter {index}
-                    </p>
-                    <p
-                      className={`text-sm text-gray-900 ${
-                        currentChapter === index ? "font-bold" : ""
-                      }`}
-                    >
-                      {chapter.title || `Chapter ${index + 1}`}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      */}
 
           {/* Controls Section */}
-          <div className="bg-gray-100 shadow-lg rounded-t-[30px] p-4">
-
-
-
-
-          <div className="flex justify-center mb-3">
-              <button
-     onClick={() =>
-      (window.location.href = "https://getpluto.in/upgrade")
-    }
-                className="bg-white text-black px-4 py-2 rounded-full flex items-center space-x-2 border border-blue-300 shadow-md hover:bg-gray-300 transition-colors"
+          <div className="bg-white shadow-xl rounded-[30px] p-4" style={{ height: '34vh' }}>
+  <div className="px-2 mt-4">
+    <div className="flex justify-between items-center">
+      <h2 className="text-xl font-semibold text-gray-800">Art of Conversation</h2>
+      <div 
+  onClick={() => window.location.href = "https://getpluto.in/upgrade"}
+  className="cursor-pointer px-2 py-1 rounded-full flex items-center justify-center"
+  style={{ backgroundColor: '#002244' }}
 >
-                <Key size={18} />
-                <span className="text-sm">Upgrade</span>
-              </button>
-            </div>
+  <span className="text-[10px] text-white">Upgrade</span>
+</div>
+    </div>
+    <p className="text-sm text-gray-500">Interactive Audiobook</p>
+  </div>
+
+  <div className="flex justify-center mb-3">
+  </div>
+
+  <div className="flex items-center mt-6">
+  <span className="text-xs text-gray-500 w-8">
+    {formatTime(currentTime)}
+  </span>
+  <div className="flex-grow mx-2">
+    <div className="h-1 w-full bg-gray-300 rounded-full">
+      <div
+        className="h-1 bg-blue-500 rounded-full"
+        style={{ width: `${(currentTime / duration) * 100}%` }}
+      />
+    </div>
+  </div>
+  <span className="text-xs text-gray-500 w-8 text-right">
+    {formatTime(duration)}
+  </span>
+</div>
+
+  <div className="flex justify-center items-center mb-3 mt-4 gap-20">
+    <div className="flex flex-col items-center">
+      <button
+        onClick={togglePlayPause}
+        className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black-500 shadow-md hover:shadow-lg transition-shadow mb-3 border border-gray-200"
+      >
+        {isPlaying ? <Pause size={15} fill ="black"/> : <Play size={15} fill ="black"/>}
+      </button>
+      <span className="text-[10px] text-gray-500">Play</span>
+    </div>
+
+    <div className="flex flex-col items-center">
+      <button
+        onClick={() =>
+          (window.location.href = "https://www.delphi.ai/pluto/call")
+        }
+        className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black-500 shadow-md hover:shadow-lg transition-shadow mb-3 border border-gray-200"
+      >
+        <Phone size={15} fill ="black"/>
+      </button>
+      <span className="text-[10px] text-gray-500">Talk & Learn</span>
+    </div>
+  </div>
+</div>
 
 
+     {/* Chapters List - Adjusted height */}
+     <div className="flex-1 min-h-0 px-6 mt-2 mb-4 overflow-hidden">
+  <h3 className="text-center text-xs text-gray-500 mb-2">Chapters</h3>
+  <div className="h-full overflow-y-auto custom-scrollbar">
+    {chapters.map((chapter, index) => (
+      <div
+        key={index}
+        onClick={() => playChapter(index)}
+        className={`py-2 sm:py-2.5 border-b border-gray-200 first:border-t ${
+          currentChapter === index ? "bg-gray-50" : ""
+        } cursor-pointer transition-colors`}
+      >
+        <div className="px-2">
+          <p className="text-xs text-gray-400 mb-0.5">
+            Chapter {index}
+          </p>
+          <p
+            className={`text-sm text-gray-900 ${
+              currentChapter === index ? "font-bold" : ""
+            }`}
+          >
+            {chapter.title || `Chapter ${index + 1}`}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
+<style jsx>{`
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,0.3);
+  }
+`}</style>
 
-            <div className="flex justify-between items-center mb-3">
-              <button className="text-gray-400 hover:text-gray-600">
-                <Rewind size={20} />
-              </button>
-              <button
-                onClick={togglePlayPause}
-                className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-500 shadow-md hover:shadow-lg transition-shadow"
-              >
-                {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-              </button>
-              <button className="text-gray-400 hover:text-gray-600">
-                <FastForward size={20} />
-              </button>
-            </div>
-
-            <div className="flex items-center">
-              <span className="text-xs text-gray-500 w-8">
-                {formatTime(currentTime)}
-              </span>
-              <div className="flex-grow mx-2">
-                <div className="h-1 w-full bg-gray-300 rounded-full">
-                  <div
-                    className="h-1 bg-blue-500 rounded-full"
-                    style={{ width: `${(currentTime / duration) * 100}%` }}
-                  />
-                </div>
-              </div>
-              <span className="text-xs text-gray-500 w-8 text-right">
-                {formatTime(duration)}
-              </span>
-            </div>
-          </div>
         </div>
       )}
 
-      {/* Question Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 backdrop-blur-sm">
-          <div className="bg-white p-4 rounded-[24px] w-full max-w-md shadow-xl relative">
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              <X size={20} />
-            </button>
-
-            <h2 className="text-lg font-bold mb-4 text-gray-800">
-              Ask a Question
-            </h2>
-
-            <form onSubmit={handleQuestionSubmit} className="space-y-4">
-              <textarea
-                className="w-full p-3 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow text-sm"
-                rows={4}
-                placeholder="What would you like to know?"
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-              />
-
-              <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-2.5 rounded-full hover:bg-red-600 transition-colors font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={isProcessing}
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader className="animate-spin w-4 h-4" />
-                    <span className="text-sm">Thinking...</span>
-                  </>
-                ) : (
-                  <span className="text-sm">Ask Question</span>
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      <audio ref={answerAudioRef} />
     </div>
   );
 };
