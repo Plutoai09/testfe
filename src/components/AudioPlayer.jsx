@@ -511,7 +511,7 @@ const AudioPlayer = () => {
       */}
 
           {/* Controls Section */}
-          <div className="bg-white shadow-xl rounded-[30px] p-4" style={{ height: '34vh' }}>
+          <div className="bg-white shadow-xl rounded-[30px] p-4" style={{ height: '38vh' }}>
   <div className="px-2 mt-4">
     <div className="flex justify-between items-center">
       <h2 className="text-xl font-semibold text-gray-800">Art of Conversation</h2>
@@ -546,7 +546,7 @@ const AudioPlayer = () => {
   </span>
 </div>
 
-  <div className="flex justify-center items-center mb-3 mt-4 gap-20">
+  <div className="flex justify-center items-center mb-3 mt-8 gap-20">
     <div className="flex flex-col items-center">
       <button
         onClick={togglePlayPause}
