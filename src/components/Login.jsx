@@ -64,7 +64,7 @@ const Login = () => {
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold mb-2">LOGIN TO PLUTO</h1>
-          <p className="text-gray-600">Enter your email and password to continue</p>
+          <p className="text-gray-600">Enter your email and passcode to continue</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -92,7 +92,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter password to continue"
+                placeholder="Enter passcode to continue"
               />
             </div>
             {error.password && (
@@ -111,7 +111,7 @@ const Login = () => {
 
         {/* OTP Notification */}
         <p className="text-xs text-maroon-600 text-center mt-4" style={{ color: '#800000' }}>
-          Password has been sent on your email address from pluto@plutoai.co.in
+          Passcode has been sent on your email address from pluto@plutoai.co.in
         </p>
       </div>
 
